@@ -76,14 +76,14 @@ const FLOOR_PALETTE = [
 class Tile {
   x: number;
   y: number;
-  type: number;
+  type: number; // 0 = wall, 1 = floor (no more exit type)
   explored: boolean;
   visible: boolean;
 
   constructor(x: number, y: number, tileType: number) {
     this.x = x;
     this.y = y;
-    this.type = tileType; // 0 = wall, 1 = floor, 2 = door
+    this.type = tileType; // Just wall (0) and floor (1) now
     this.explored = false;
     this.visible = false;
   }
@@ -202,21 +202,25 @@ class Entity {
     ctx.fillRect(x, y - barHeight, barWidth * healthRatio, barHeight);
   }
 
+
   draw(ctx: CanvasRenderingContext2D, x: number, y: number, size: number) {
     if (this.sprite && this.sprite.complete) {
-      ctx.drawImage(this.sprite, x, y, size, size);
+      if (this.last_direction === "right") {
+        // Draw flipped sprite when facing right
+        ctx.save();
+        ctx.translate(x + size, y);  // Move to right edge
+        ctx.scale(-1, 1);            // Flip horizontally
+        ctx.drawImage(this.sprite, 0, 0, size, size);
+        ctx.restore();
+      } else {
+        // Draw normal sprite when facing left
+        ctx.drawImage(this.sprite, x, y, size, size);
+      }
     } else {
-      // Fallback to character representation
+      // Fallback to character
       ctx.fillStyle = this.color;
       ctx.font = `${size}px Arial`;
-      ctx.fillText(this.char, x + size / 4, y + size - size / 4);
-    }
-    
-    // Draw health bar if needed
-    if (this.name !== "Player" && this.alive && 
-        (this.show_health || Date.now() - this.health_bar_time < 2000)) {
-      this.draw_health_bar(ctx, x, y, size, size);
-      this.show_health = false;
+      ctx.fillText(this.char, x + size/4, y + size - size/4);
     }
   }
 }
@@ -268,12 +272,11 @@ class Player extends Entity {
 
   load_sprites() {
     if (PLAYER_IMAGE) {
-      this.right_sprite = new Image();
-      this.right_sprite.src = PLAYER_IMAGE;
-      
-      // Create left-facing sprite by flipping (would need canvas manipulation)
-      this.left_sprite = new Image();
-      this.left_sprite.src = PLAYER_IMAGE; // In a real app, you'd flip this
+      this.sprite = new Image();
+      this.sprite.src = PLAYER_IMAGE;
+      // No need for left_sprite/right_sprite since we're flipping
+      this.left_sprite = null;
+      this.right_sprite = null;
     }
   }
 }
@@ -395,7 +398,19 @@ class Game {
     if (rooms.length > 0) {
       const last_room = rooms[rooms.length - 1];
       this.exit_pos = last_room.center;
-      this.tiles[this.exit_pos[1]][this.exit_pos[0]].type = 2;
+  
+      // Create exit entity
+      const exit = new Entity(
+        this.exit_pos[0], 
+        this.exit_pos[1], 
+        "E", 
+        YELLOW, 
+        "Exit"
+      );
+      this.entities.push(exit);
+  
+      // Make sure the tile is floor where the exit is placed
+      this.tiles[this.exit_pos[1]][this.exit_pos[0]].type = 1;
     }
     
     this.update_fov();
@@ -687,6 +702,13 @@ class Game {
     const new_x = this.player.x + dx;
     const new_y = this.player.y + dy;
     
+    // Update facing direction FIRST
+    if (dx > 0) {
+      this.player.last_direction = "right";
+    } else if (dx < 0) {
+      this.player.last_direction = "left";
+    }
+    
     if (new_x < 0 || new_y < 0 || new_x >= this.map_width || new_y >= this.map_height) {
       this.add_message("You can't go that way!");
       return;
@@ -704,19 +726,21 @@ class Game {
       return;
     }
     
-    if (new_x === this.exit_pos[0] && new_y === this.exit_pos[1]) {
-      this.dungeon_level += 1;
-      this.add_message(`Descending to dungeon level ${this.dungeon_level}...`);
-      this.generate_dungeon();
-      this.update_fov();
-      return;
-    }
-    
-    // Check entities
+    // Check entities (including exit)
     for (const entity of [...this.entities]) {
       if (entity.x === new_x && entity.y === new_y) {
-        this.fight(entity);
-        return;
+        if (entity.name === "Exit") {
+          // Handle going to next level
+          this.dungeon_level += 1;
+          this.add_message(`Descending to dungeon level ${this.dungeon_level}...`);
+          this.generate_dungeon();
+          this.update_fov();
+          return;
+        } else {
+          // Regular entity fight
+          this.fight(entity);
+          return;
+        }
       }
     }
     
@@ -738,6 +762,11 @@ class Game {
   }
 
   fight(entity: Entity) {
+    // Prevent fighting the exit
+    if (entity.name === "Exit") {
+      return false;
+    }
+
     // Player attacks first
     const player_damage = this.calculate_damage(this.player, entity);
     entity.show_health = true;
@@ -933,12 +962,13 @@ class Game {
 
   move_enemies() {
     for (const entity of this.entities) {
-      if (!entity.alive) continue;
+      if (!entity.alive || entity.name === "Exit") continue;  // Skip exit
       
       const dx = entity.x - this.player.x;
       const dy = entity.y - this.player.y;
       const distance = Math.max(Math.abs(dx), Math.abs(dy));
       
+      // Show health bar when enemy is close to player
       if (distance <= 5) {
         entity.show_health = true;
         entity.health_bar_time = Date.now();
@@ -1012,12 +1042,6 @@ class Game {
           } else if (tile.type === 1) { // Floor
             ctx.fillStyle = this.floor_color;
             ctx.fillRect(screen_x, screen_y, GRID_SIZE, GRID_SIZE);
-          } else if (tile.type === 2) { // Exit
-            ctx.fillStyle = YELLOW;
-            ctx.fillRect(screen_x, screen_y, GRID_SIZE, GRID_SIZE);
-            ctx.fillStyle = BLACK;
-            ctx.font = `${GRID_SIZE}px Arial`;
-            ctx.fillText("E", screen_x + GRID_SIZE / 4, screen_y + GRID_SIZE - GRID_SIZE / 4);
           }
         } else if (tile.explored) {
           if (tile.type === 0) { // Wall
@@ -1037,6 +1061,16 @@ class Game {
         const screen_x = entity.x * GRID_SIZE - this.camera_x;
         const screen_y = entity.y * GRID_SIZE - this.camera_y;
         entity.draw(ctx, screen_x, screen_y, GRID_SIZE);
+        
+        // Add this condition to exclude the exit
+        if (entity.show_health && entity !== this.player && entity.name !== "Exit") {
+          // Show health bar for a few seconds after being hit
+          if (Date.now() - entity.health_bar_time < 3000) {
+            entity.draw_health_bar(ctx, screen_x, screen_y, GRID_SIZE, GRID_SIZE);
+          } else {
+            entity.show_health = false;
+          }
+        }
       }
     }
     
