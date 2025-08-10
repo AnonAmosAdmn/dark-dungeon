@@ -132,6 +132,8 @@ class Entity {
   show_health: boolean;
   health_bar_time: number;
   special: Record<string, any>;
+  last_direction: string;
+  can_face_directions: boolean;
 
   constructor(
     x: number,
@@ -160,6 +162,8 @@ class Entity {
     this.health_bar_time = 0;
     this.special = {};
     this.load_sprite();
+    this.last_direction = "right";
+    this.can_face_directions = false;
   }
 
   load_sprite() {
@@ -205,15 +209,15 @@ class Entity {
 
   draw(ctx: CanvasRenderingContext2D, x: number, y: number, size: number) {
     if (this.sprite && this.sprite.complete) {
-      if (this.last_direction === "right") {
-        // Draw flipped sprite when facing right
+      if (this.can_face_directions && this.last_direction === "right") {
+        // Only flip if the entity can face directions and is facing right
         ctx.save();
-        ctx.translate(x + size, y);  // Move to right edge
-        ctx.scale(-1, 1);            // Flip horizontally
+        ctx.translate(x + size, y);
+        ctx.scale(-1, 1);
         ctx.drawImage(this.sprite, 0, 0, size, size);
         ctx.restore();
       } else {
-        // Draw normal sprite when facing left
+        // Draw normally for entities that don't face directions or are facing left
         ctx.drawImage(this.sprite, x, y, size, size);
       }
     } else {
@@ -237,12 +241,12 @@ class Player extends Entity {
   poisoned: boolean;
   poison_damage: number;
   poison_duration: number;
-  last_direction: string;
   left_sprite: HTMLImageElement | null;
   right_sprite: HTMLImageElement | null;
 
   constructor(x: number, y: number) {
     super(x, y, "@", GREEN, "Player", 100, 8, 5);
+    this.can_face_directions = true;
     this.level = 1;
     this.exp = 0;
     this.next_level = 100;
@@ -253,7 +257,6 @@ class Player extends Entity {
     this.poisoned = false;
     this.poison_damage = 0;
     this.poison_duration = 0;
-    this.last_direction = "right";
     this.left_sprite = null;
     this.right_sprite = null;
     this.load_sprites();
@@ -407,6 +410,7 @@ class Game {
         YELLOW, 
         "Exit"
       );
+      exit.can_face_directions = false;
       this.entities.push(exit);
   
       // Make sure the tile is floor where the exit is placed
@@ -539,6 +543,7 @@ class Game {
             enemy_types[enemy_type], 
             hp, attack, defense, exp
           );
+          enemy.can_face_directions = true; // Enemies can face directions
           
           if (Object.keys(special).length > 0) {
             enemy.special = special;
