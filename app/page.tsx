@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import detectEthereumProvider from '@metamask/detect-provider';
 
@@ -73,6 +73,7 @@ const FLOOR_PALETTE = [
 ];
 
 
+
 type LeaderboardEntry = {
   walletAddress: string;
   name: string;
@@ -81,11 +82,13 @@ type LeaderboardEntry = {
   timestamp: number;
 };
 
+
+
 class Leaderboard {
   entries: LeaderboardEntry[];
   maxEntries: number;
 
-  constructor(maxEntries = 10) {
+  constructor(maxEntries = 5) {
     this.entries = [];
     this.maxEntries = maxEntries;
     this.load();
@@ -128,6 +131,7 @@ class Leaderboard {
     this.save();
   }
 }
+
 
 
 // A single tile on the game map
@@ -303,6 +307,8 @@ class Player extends Entity {
   right_sprite: HTMLImageElement | null;
   walletAddress: string;
   score: number;
+  lastMoveTime: number = 0;
+  moveCooldown: number = 100;
 
   constructor(x: number, y: number, walletAddress: string) {
     const name = walletAddress  
@@ -325,6 +331,14 @@ class Player extends Entity {
     this.right_sprite = null;
     this.score = 0;
     this.load_sprites();
+  }
+
+  canMove(): boolean {
+    return Date.now() - this.lastMoveTime > this.moveCooldown;
+  }
+
+  recordMove() {
+    this.lastMoveTime = Date.now();
   }
 
   addScore(points: number) {
@@ -1009,7 +1023,7 @@ class Game {
       if (this.player.hp <= 0) {
         this.player.hp = 0;
         this.game_state = "game_over";
-        this.add_message("You have been defeated by poison! Refresh to restart");
+        this.add_message("You have been defeated by poison!");
       }
     }
   }
@@ -1387,7 +1401,7 @@ class Game {
 // React component for the game
 export default function DungeonCrawler() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [gameState, setGameState] = useState<'login' | 'playing' | 'gameOver'>('login');
+  const [gameState, setGameState] = useState<'login' | 'playing' | 'gameOver' | 'restarting'>('login');
   const [playerAddress, setPlayerAddress] = useState<string | null>(null);
   const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -1457,13 +1471,11 @@ export default function DungeonCrawler() {
   }
 
 
+
   useEffect(() => {
+
     leaderboardRef.current = new Leaderboard();
-  }, []);
 
-
-
-  useEffect(() => {
     if (typeof window !== 'undefined') {
       onboarding.current = new MetaMaskOnboarding();
     }
@@ -1562,46 +1574,44 @@ export default function DungeonCrawler() {
     gameRef.current = new Game(playerAddress || "Player");
     const game = gameRef.current;
     
-    // Only set player name if address exists
     if (playerAddress) {
       const shortAddress = `${playerAddress.substring(0, 6)}...${playerAddress.substring(playerAddress.length - 4)}`;
       game.player.name = shortAddress;
       game.player.walletAddress = playerAddress;
     }
 
-    // Handle keyboard input
+    // Store keysRef in a variable for cleanup
+    const currentKeysRef = keysRef;
+
+    // Key handlers
     const handleKeyDown = (e: KeyboardEvent) => {
       const key = e.key.toLowerCase();
-      keysRef.current.add(key);
+      currentKeysRef.current.add(key);
       
-      // Handle restart with R key (works anytime)
       if (key === 'r') {
         restartGame();
-      }
-      // Handle quit with Q key (works anytime)
-      else if (key === 'q') {
+      } else if (key === 'q') {
         quitGame();
       }
     };
 
     const handleKeyUp = (e: KeyboardEvent) => {
-      keysRef.current.delete(e.key.toLowerCase());
+      currentKeysRef.current.delete(e.key.toLowerCase());
     };
 
+    // Add event listeners
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
 
     // Game loop
+    let animationId: number;
     const gameLoop = (timestamp: number) => {
       const game = gameRef.current;
       if (!game) return;
 
-      // Only process movement if game is playing
       if (game.game_state === "playing") {
-        // Handle movement
         const keys = keysRef.current;
-        let dx = 0;
-        let dy = 0;
+        let dx = 0, dy = 0;
 
         if (keys.has('w') || keys.has('arrowup')) dy = -1;
         if (keys.has('s') || keys.has('arrowdown')) dy = 1;
@@ -1609,93 +1619,56 @@ export default function DungeonCrawler() {
         if (keys.has('d') || keys.has('arrowright')) dx = 1;
 
         if (dx !== 0 || dy !== 0) {
-          game.move_player(dx, dy);
-          // Clear the movement keys after processing
-          if (dy === -1) {
-            keys.delete('w');
-            keys.delete('arrowup');
-          }
-          if (dy === 1) {
-            keys.delete('s');
-            keys.delete('arrowdown');
-          }
-          if (dx === -1) {
-            keys.delete('a');
-            keys.delete('arrowleft');
-          }
-          if (dx === 1) {
-            keys.delete('d');
-            keys.delete('arrowright');
+          if (game.player.canMove()) {
+            game.move_player(dx, dy);
+            game.player.recordMove();
           }
         }
 
-        // Handle poison
         if (game.player.poisoned) {
           game.handle_poison();
         }
       }
 
-      // Update camera and draw
       game.update_camera();
       game.draw(ctx);
 
-      // Check if game is over and update state
       if (game.game_state === "game_over" && gameState === 'playing') {
         setGameState('gameOver');
       }
 
-      animationRef.current = requestAnimationFrame(gameLoop);
+      animationId = requestAnimationFrame(gameLoop);
     };
 
-    animationRef.current = requestAnimationFrame(gameLoop);
+    animationId = requestAnimationFrame(gameLoop);
+    animationRef.current = animationId;
 
+    // Cleanup function
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
+      currentKeysRef.current.clear(); // Use the variable here
     };
-  }, [gameState, playerAddress]);
+  }, [gameState, playerAddress]); // Added restartGame to dependencies
 
-  const restartGame = () => {
-    if (gameRef.current) {
-      // Save score to leaderboard before restarting
-      if (gameState === 'gameOver') {
-        leaderboardRef.current?.addEntry(
-          gameRef.current.player, 
-          gameRef.current.dungeon_level
-        );
-      }
-      
-      // Restart the game with the same player name/wallet
-      const playerName = gameRef.current.player.walletAddress || 
-                        gameRef.current.player.name || 
-                        "Anonymous Player";
-      gameRef.current.restart(playerName);
-      
-      // Update game state
-      setGameState('playing');
-      setShowLeaderboard(false);
-      
-      // Restart the game loop
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      const canvas = canvasRef.current;
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          animationRef.current = requestAnimationFrame(() => {
-            if (gameRef.current) {
-              gameRef.current.update_camera();
-              gameRef.current.draw(ctx);
-            }
-          });
-        }
-      }
+  // Modified restart function
+  const restartGame = useCallback(() => {
+    // Clear all key states
+    keysRef.current.clear();
+
+    // Cancel any running animation frame
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
     }
-  };
+
+    // Force React to re-run the game setup effect
+    setGameState('restarting');
+    setTimeout(() => setGameState('playing'), 0);
+  }, []);
 
   const quitGame = () => {
     setGameState('login');
