@@ -33,9 +33,6 @@ const TREASURE_IMAGE="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYA
 const GOLD_IMAGE="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAAEspJREFUeNrsmnuUnGd93z/P5b3PzO7M7K52Vyvt6mbLCEs2tiXZjo25BdvYhwQ7hLTAIRwSKBxKk4a0xU1DCJfTQhIuKTi0DSSnoTSYhrjUxk2NMBhCbMsXWY7vsqTVrrTa69zf2/M8/WMVAjlJMKRtmsP+/pk5vzNzzjyf9/t+f5d3hHOOH+WQ/IjHBoANABsANgBsANgAsAFgA8AGgA0AGwA2AGwA+FEMDTBe3fG8PiwcNANLJ8/JrUScyzsE2u8RKEiign4/htKRaOgYSWlybGEpREKphxivLnGqgM2JYPNIfMlr3+yu/9OvZw89fDQ4ZIOk128vkA188kLgWUNN5+SZIFd1/FqL+nDAQg+OL6Z850f8XQD834rCQDeDCya9S191gffTQewP3/NY+s0rX8SMDY1flvR2YW7+if3yorfcJHliduTJ3/vjqY/94eeWb7XWub/z6f4+AaSFY3JE7frFK8P33Pwi+4ahKsoEktdfufyWxkwfpAVhyFoDjn+5yfA+wY4Lps7/0C8Pf/Ky6fDaX/jV8qecdfk/KADOgbGObubYNerv/c9v0XdvaTBCS9OZKzgx12ZiUmB9Hyo5NtH4Fw2x4yDkHUFnvoe841l+TIobGlpuXWgNnskDRWn/AZhgWgAancR68sLN4soPvML7L9FSfWT+4ZjH78s4c2LArq2Suh9i56q4swGpqYIf4jLwvIz6wQmSmy+mMXFKfvbdq3fecMC+aU/TXRF7rtHP/79SgANn1o1RwCATXHOxfvXbLvLety1mZrLZiiuyq3u9DgjLwnOGgwereEpAYcEKir4mP1XgRgXVzRaTBYhyBD3ZpNwzwb4Ru/PTN+nP9J4a4Zm71k7+h3tbH7ntUT7h/30CcKzbUsVzrGIQQpAWsGuru/C3b1Sfb66IMKxkYACVkzQKZh+OiHxFaSQIMLlg0LJUZ0pqYcmpO1J41STJCy9BJjvonzyBrdTwmhLKkuTFe3jhTLz1fWNf/PhTvd7RwyeKQ5XE5/+UQf5QCgi0Ii88SuMwQoa/eJl4/2YGoYlzTA42iSk8ycKjsHhKsu+ynGKtQ6vn44WC2nSKH+e4QLBpV8bCf2vR+dbj+GPzLB8+QnK1oPLTdRiUGOkjNz1J/cckH3Tus4c61c/f+y31+ycfyx7DOPDEuUvzw4Vwzj3vPgAHTd/SjHJOFY4zXcHP7dP/9GPX5x8zAwMOpIN0PObIA4bOvGXLVJ/zX9AFoEw9Ts17jJ8v0FuAi+rIZhUrrqB9zwm6d/0v0p6jZxtM/9wYw1degfAO4lqfxB1f4NhnC3a8PmIwVUs/9bkdv/HhD3/zX3dbHlrJ/8ce4ARta1CyltwwY9+YtiWSEiwUvqQ9W7IlKulMSkrjYUpJ1oe5Yx42gHwgEdsqBOMxNsuQQ4769Y7axCjlkVWe/FpO664W5RlDMLmI6pZEMkcPD7jvA4o9/+ZA+Eu/MH7LpLpv27v+hXyTtK4QQiLED66GH1gBibRMVIq4WvUu+cnd+j2vnule21+LkKXDlCVjkyVRYFHSUUSKx58LKBcLPF2w+UJJY2cfl8FKvUHzlSHGTCGMQLjjuGWLOLzCs/fmLJ0JmDqwiWo9IwgGyNDiTIvj/1PijZ1P88Yxhiaf4HXv9P7xH/1J/Lk4SSmN+WEV8PwMpV84Dk7Ll/zqNeITe5vpnjyExVVDMnQGURjCaIg4FlgDpbHosZhJFXDslGT7xQnhaAoMEIHA3d9jrtzG2A378dxXcB1J/rQh6MVs3StIi5T5++fZcmmC/9IYkhK9lDGzP2Nu/hTB6FkQkldeE1736Gz6x8tnT/dMlq6XpR9UAZPVme/KrDc0fzUyAxeMysu++Nrs7vEor9oMyjHJ2XnQaY9qrEmiAGMcrhRIFUBd0s8c84977NgvaS0XBPU+yYjF9WHusE9HTyKbFjlos2WqIKyU4HUgLLCuYDkbpnnTENIZKEt6T2Tc935LfWuF899qiXaPc/jJKx9+1zu/9ObDD554yPfV9x7w+QCYro5+zxekACnc93Z4ToS/f7P3ratnzMVF36H8gl4sWT2tSYIUJQPS1TrSCaKgJI5TIKM/FrJ2LGBqtySVBe3MUG8UeNKCVLSeK+kteiTjPrWRHs7kFBWFvzVDupKF+yPs9iYT12W4vkVIy8o3Bjz4G4ZKvcLMyycYf/l+7j68eN/PvOPQgSg8d2QhcA5yKzB/iy9ogI6KvpOITUFFl6Q2wjlwAgrr2NZQ2w5uLi6mcCAshUoplzXVyCGURFAQD7XR1kP7Bc6WyMSjNIKym2OHNP6MZTSQ2K7PymFHuRySNCWbrjHInSXGjJI9nCNFC6ElFp+xfQUnb28zNx9Tf8UUvptnKBkwuU8QJG3aT1uaU3/A+NnK9EQ4Mt7qqTMEKYuixbATeEbTE3+zEvQ5U/8rYYmrKYtrHsooMiNYatn8xBkGzVBEA+GQ/RDPpOhY4OS67GK/RGExFpyUWKXwuinVYSjimCDwcBZUVeJP5ix8bRn2DsOYojIV4oSPX9OIp7u4VOC0g1Axuifl1Dc9es8OGG1onE7YcXmXoKo4cY9maVGz58bFTR/xBn/41vduvrFdeq2+dsQOou9TFf7GAur5Fs/LiZwhlkb+s0uzj64t9MPnujEDqhgjEcJhAWfXCa+0YlbaNWSkEaFC5CUeEFbAlR4YD3Ifl2niUZ9kRNE5VZK1JTiJ7A/wqhlyVxU3iKD0cdWE8MUVZn5thsl/spfqdE7Wz8G34BnG9ww4/ZUqiw/P8Ipr+1fd+uunb4ciwIjnZe3yb2t7CxQracgrd6q3/uz+9IbKsBXWOYQATwmkH5HlPmUvxxUlXtIhHBvgAon0BEhJ1ldIDIN5C85DSoWUHsVAMnrQw3RTVg4ZXCkQWiJKgYw1pYkpRISq+Qjp0JWIaIuPOE+Q1DSLj8egNcFkTuOCLs991rHwhQl+fF959ft+Pr01KDTCiu/bFfy1jZB10EsdUUVxfmgv+ldXdT88yC29gcTze4zFAaFQSBSBhUGhoCgRWiGloEBQZoJszeIFJSZ3rP5Zh35Hkmz3yVuG9GzG1ot9GrsdS4/2OfMFj5HrPHTNYlYK+k9lDKqKien1e9Qyipi7H9WwBJOK+dug7EeMXjnM5oMDPNtBSUH3SIW3X9t709pKcOZTt6kPpoYO3vepAvX61u9UAJ0WNCpFfMVF8trmUFB/uZ+97crJ9NK5Jcugp3jBjhCtwFgQpcVtDmFgKPsFth5ieh7dFYuQJb7oU3QF/TVB2bbIJCAYCrGFoLEX4s2K/rGM9gM9ookQOxQRTSu0aeGZAavzIelMwOhLp/DGLkec+RLlsuDUbTknji6hY8XWi4YZ2uQIRwx6eBkxUSICwHp8+87K0bd9OHjdk23zWKC/u7yvj3XuLwAMnwOQl7Bz2Oz8+E3mi7uJ9nZWU6K4S7cPnVXH9FTE2IjCGIs1IH0PGj5uvosbDaCeIPsGhAGVM1jM0bGP8gWd45bTTzsmL6tRH7cQC4yV9J/qkPcd9SsiLBK70ENFGqcizAnJ0rwlrw9R2TmK6D1LPr/G6nyPbr9g76shOr/ARha75XpsmSCevB1dKxCxA6G45/ONR17777hUK0qB+84tIYTDIc81QsOTWAdai9rv3qS+cWHh711Zc/i1Jax1hDpg04igNCHtVoKnLUmQ49cKMDkCKMKYtOeTTDqEtuStAh1KVAAoEFoye8+AU/MwfaCCVIKilTO+x6F31RBaYL0Q1zPIdoqs+5hVyBehd9LQmW1THV2ivtugPEl3DfzthmB3hrUSt/UnIDuJmDuMOCtxVYFILPZkwMvfXb3q/qeLe5NII4RAOQi8khK17gGXTAhyI3jBuLhkn/T2nm1pqiNLRLGl4kdEgcRZ8ESGOr9g4ZilFoAUFuckRRqxtpDiPNA1Dy+E3gnD8AUK6h52ZF0Fk1VFcfsKx7+6ihWw43JFcN4oVkooQZoCWThOP+zwNhtqUz56UpKEHkGSkYyCrAKeoTJWY7kboQazqOYmhDeCW/kWInB0lyp4lZxwaIDaPOB9b40/esO79VWD0h8Evo8mQ4oC586ZYLvvYSiZW3WrZ1e9PEx6vvYzFJo40FhrAYtsZPRLR7roaFFFdqukXUW0dcDwJRJdKdb1lUvE2YLVOUHzvAoykGAteipi+jUNqnev4HuOcCLAFBKVnHPrzNF+0nDkrjUEcMFVCWEi8L2SyqYecrvBxQaw2FhTqeyinF0gc7vxg4iydwHi2QGtZzzm707Y8/MB8XbLVW9YveS30tqnb/mIfkee2fZ310cNcOJ0QKWS0whto4gGK7tG8/FOLhnklpPzFj+w6GCA7ZWQxkxuUaRpwfKZFqQl3oUh4eYABuubMlGB4csSZv97j+oAwsq6glwmUI2YoR1d3FqGWc05dmeP2tYQiaA4bWif7DI8nLF0FlIcW65eH056pwTFima4WeAyh0xX8KNnsM7Q+vosxvUJvGVqU5rGBQWPfdXx0HsSJq+o09w3z5tfZl9//FHv2Y9/oXivl5S4c93f+jjsnS9/+SXpR95xoHxXQClt5uiPwNqZDDtwWAuuDyMTCZVhzXoCTs+m5As5AxlR2VOhsV3iRQJbCsrTkP55l95QhfGXxfhDEucctl0yeGQR+gV+AM89A4/8GTQbPhcfdNSaJUpKlhfgiQcFU1eEbD6wbtzHD0Gyrcfw9j56OMYlk5ijS/g6Rc5IpO7hnIcsJN0TMYvPZshuRhRVqU1Dq1p03/7p6LX3Hi7vlCIHT60D+PWXzLz/V67Jb3G5wZYCF1qyGUvnSI4twRpHpRlRrfuQgcLSafssn+0ilnOEEwxyD+EHRDVNHAcESYnfMAyWHK22INkR48cOuVbg0jaybgi2gkwkK7MCtQrVQmGQ0NR4VcnqnGUwJ6gEAhUJZDWnlUlQHtrzkbkkDlcIRluYpoeqSzASFySoJAItcIOc/ukModvEjZxBGrivP6C//nt36H//0LPqXuGc49G3b3vswvH+C8iBsISxlJWTgrIF2hMo4XBBTDhcAevotgStFYNurRKg0bECaSmdQTlJfaaGaCicEIjC0jneprAloQzxtcY5CTv6hDsFGLm+1zOC7IhEDldQ58U445BKQuEoH+tjez28fSAjiXUCBj52vo1M1rBSUZYhfsPRXwuJ9jRRoxaXnRuCDKzeUdDvSDYdGEHbR7D9gEOP1j6pAX7lDj70zku8W1Scy6f64sHpKNw9k7idSiKeOauenu3K527enf9kdz4nLTTC9akGPcLtVaLxEKSELpi1gqLI0HW1njMOAgUhSBxaS1ypoGvpzPr4W0ukLyEHtEJssiwdh/FtID0JVuCUQk5HyCCHsFzvPxSwGmDSALnNIq1Dux5I0IXgkc8Uxd7rlKc3SRgeh5NnuOcJ/Y3/eEf7ExfexsHLd0zvWs5YO3pWf0U452joKca9zFeeFaupypoVX++eEBNSOHnyjJp7qlOUr7vQ/fPX7M7fNFlxWzp9lzV3VGszF9VCU6w/NHVGInqGlcf72Ucfsr/5Uwf814zVvOaXHsxu339p/rKLXySnhRCUogG9EXpffZpMlozvczDs1seSY5Le44JFL6C62aM6rBC5wPUy3GSBP+wQmaA7q/nS1+Rdj8/3Tlz/Iveq8boZ8X2p8kK3v/qkuut3DuW/dfWkvPHAeeH+cLgaHZvtHv2dB/v/diXNTkrnuHxmiLlViynCdQ+YCKYYUel6A+MUse8z0ZAIHK1VybFeiaXkhSN4QRA2ltomf+PB5DNvf2PwaoRcf0YiQHiSf/nx3q999NDae6dGXJCoWqIw/p98Us02dwhNz+GCGi6MkUfmWT6k3JeP8T8aY6Goe/lUQ9jk6Y597D8dtreagU52T6pNg8LaSzaZK8cr/mRplVtYS5f/dM790bcXsv+6UhZuVy2pTSe18YV+7g2HZumBpdZCZhS+c4xXfM52BEIWdICq7xDWsn+6xvyapcjDvxyGhDi3TnPrr+rcEuEv8rEGJVzRy+3C8Zbktw+ZX2qWeWP/PrW/UVeBMYKjzxYPf/nb6lPjXoS13Wxhrch8J+Lbf1d88x/9DC8ORiWisIiVNb59JHjiljvTN8ytZg9csWuEP59dlkLht02arvUlZe44RUmrV3B4Qd568VSEVyiOnumymCo8LUgEGGnba9a259KSOLSEHjgniCWEHoSBQAvBoOSv3Rj/QGtxASi5PkMv5faZD9xbXN18ID0vCP2pwBWt5VZxpJdVC09LnAQtJRi//8G78usOPcbPvnSnf22jmo+fWDOP/8GD3Q/NZzzRCCD0LEI4W1qXRhpSLSitINKCwhPEGrR0eBpCLQi1oDh3FnnuYnly/f0P9WBk4y8yGwA2AGwA2ACwAWADwAaADQAbADYAbADYALAB4Ecr/vcAZWLT9yZ8BbsAAAAASUVORK5CYII="
 
 
-// Update your state type definition at the top of the component
-type GameState = 'login' | 'playing' | 'gameOver';
-
 
 // Game settings
 const GRID_SIZE = 32;
@@ -74,6 +71,64 @@ const FLOOR_PALETTE = [
   '#3C1423', '#320014', '#0A000A', '#1E0A0A', '#5A001E', '#140A05', 
   '#230F19', '#32141E', '#190505', '#5A2832'
 ];
+
+
+type LeaderboardEntry = {
+  walletAddress: string;
+  name: string;
+  score: number;
+  level: number;
+  timestamp: number;
+};
+
+class Leaderboard {
+  entries: LeaderboardEntry[];
+  maxEntries: number;
+
+  constructor(maxEntries = 10) {
+    this.entries = [];
+    this.maxEntries = maxEntries;
+    this.load();
+  }
+
+  addEntry(player: Player, level: number) {
+    const entry: LeaderboardEntry = {
+      walletAddress: player.walletAddress,
+      name: player.name,
+      score: player.score,
+      level: level,
+      timestamp: Date.now()
+    };
+
+    this.entries.push(entry);
+    this.entries.sort((a, b) => b.score - a.score); // Sort descending by score
+    if (this.entries.length > this.maxEntries) {
+      this.entries = this.entries.slice(0, this.maxEntries);
+    }
+    this.save();
+  }
+
+  save() {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('dungeonCrawlerLeaderboard', JSON.stringify(this.entries));
+    }
+  }
+
+  load() {
+    if (typeof window !== 'undefined') {
+      const data = localStorage.getItem('dungeonCrawlerLeaderboard');
+      if (data) {
+        this.entries = JSON.parse(data);
+      }
+    }
+  }
+
+  clear() {
+    this.entries = [];
+    this.save();
+  }
+}
+
 
 // A single tile on the game map
 class Tile {
@@ -247,6 +302,7 @@ class Player extends Entity {
   left_sprite: HTMLImageElement | null;
   right_sprite: HTMLImageElement | null;
   walletAddress: string;
+  score: number;
 
   constructor(x: number, y: number, walletAddress: string) {
     const name = walletAddress  
@@ -267,7 +323,13 @@ class Player extends Entity {
     this.poison_duration = 0;
     this.left_sprite = null;
     this.right_sprite = null;
+    this.score = 0;
     this.load_sprites();
+  }
+
+  addScore(points: number) {
+    this.score += points;
+    return `Gained ${points} points!`;
   }
 
   level_up(): string {
@@ -312,6 +374,7 @@ class Game {
   wall_color: string;
   floor_color: string;
   enemy_agro_range: number;
+  leaderboard: Leaderboard;
 
   constructor(playerName: string, walletAddress?: string) {
     this.map_width = 100;
@@ -335,6 +398,7 @@ class Game {
     this.wall_color = STONE;
     this.floor_color = DARK_GRAY;
     this.enemy_agro_range = 1;
+    this.leaderboard = new Leaderboard();
     this.generate_dungeon();
   }
 
@@ -366,6 +430,12 @@ class Game {
     this.entities = [];
     this.items = [];
     this.combat_log = [];
+    
+    if (Entity.name === "Exit") {
+      const levelBonus = this.dungeon_level * 100;
+      this.player.addScore(levelBonus);
+      this.add_message(`+${levelBonus} points for descending to level ${this.dungeon_level}!`);
+    }
     
     // Generate rooms
     const rooms: Room[] = [];
@@ -815,6 +885,9 @@ class Game {
       this.player.exp += entity.exp;
       this.add_message(`You defeated ${entity.name}! Gained ${entity.exp} XP.`);
       this.add_to_log(`You defeated ${entity.name}! Gained ${entity.exp} XP.`);
+      const scoreGain = Math.floor(entity.exp * 1.5);
+      this.player.addScore(scoreGain);
+      this.add_message(`+${scoreGain} points for defeating ${entity.name}!`);
       
       if (this.player.exp >= this.player.next_level) {
         const level_up_msg = this.player.level_up();
@@ -971,6 +1044,13 @@ class Game {
       this.player.hp += amount * 2;
       this.add_message(`You equipped ${item.name}! Defense + ${amount} and max HP + ${amount * 2}.`);
       this.add_to_log(`You equipped ${item.name}! Defense + ${amount} and max HP + ${amount * 2}.`);
+    }
+    if (effect === "gold") {
+      const scoreGain = Math.floor(amount / 2);
+      this.player.addScore(scoreGain);
+    } else if (effect === "treasure") {
+      const scoreGain = amount;
+      this.player.addScore(scoreGain);
     }
   }
 
@@ -1198,6 +1278,10 @@ class Game {
       [
         `Gold: ${this.player.gold}`,
         `Dungeon: ${this.dungeon_level}`
+      ],
+      [ // Add this new column
+        `Score: ${this.player.score}`,
+        `Level: ${this.player.level}`
       ]
     ];
     
@@ -1244,6 +1328,14 @@ class Game {
     ctx.font = "24px Arial";
     const restart_text = "Press R to restart or use the buttons below";
     ctx.fillText(restart_text, SCREEN_WIDTH / 2 - ctx.measureText(restart_text).width / 2, SCREEN_HEIGHT / 2 + 20);
+    
+    // Add score display
+    ctx.font = "24px Arial";
+    const scoreText = `Final Score: ${this.player.score}`;
+    ctx.fillText(scoreText, SCREEN_WIDTH / 2 - ctx.measureText(scoreText).width / 2, SCREEN_HEIGHT / 2 + 60);
+    
+    // Add leaderboard entry - we'll handle the display in React
+    this.leaderboard.addEntry(this.player, this.dungeon_level);
   }
 
   draw_minimap(ctx: CanvasRenderingContext2D) {
@@ -1304,6 +1396,72 @@ export default function DungeonCrawler() {
   const animationRef = useRef<number | null>(null);
   const keysRef = useRef<Set<string>>(new Set());
   const onboarding = useRef<MetaMaskOnboarding | null>(null);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const leaderboardRef = useRef<Leaderboard | null>(null);
+
+  function LeaderboardDisplay({ 
+    leaderboard, 
+    onClose,
+    showScore,
+    playerScore = 0,
+    isGameOver = false
+  }: { 
+    leaderboard: Leaderboard, 
+    onClose: () => void,
+    showScore?: boolean,
+    playerScore?: number,
+    isGameOver?: boolean
+  }) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-80 z-10">
+        <div className="bg-gray-800 p-6 rounded-lg max-w-md w-full">
+          <h2 className="text-2xl font-bold mb-4 text-center">Leaderboard</h2>
+          
+          {showScore && (
+            <div className="mb-4 p-3 bg-gray-700 rounded text-center">
+              <p className="text-lg">Your Score:</p>
+              <p className="text-2xl font-bold text-yellow-400">{playerScore}</p>
+            </div>
+          )}
+          
+          <div className="space-y-2 mb-4 max-h-64 overflow-y-auto">
+            {leaderboard.entries.map((entry, index) => (
+              <div key={index} className="flex justify-between bg-gray-700 p-2 rounded">
+                <span className="font-medium">
+                  {index + 1}. {entry.name}
+                </span>
+                <span className="text-yellow-400">
+                  {entry.score} (Level {entry.level})
+                </span>
+              </div>
+            ))}
+            {leaderboard.entries.length === 0 && (
+              <p className="text-center py-4">No entries yet</p>
+            )}
+          </div>
+          <div className="flex justify-center">
+            <button
+              onClick={onClose}
+              className={`px-4 py-2 rounded ${
+                isGameOver 
+                  ? 'bg-green-600 hover:bg-green-700' 
+                  : 'bg-blue-600 hover:bg-blue-700'
+              }`}
+            >
+              {isGameOver ? "Continue" : "Close"}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+
+  useEffect(() => {
+    leaderboardRef.current = new Leaderboard();
+  }, []);
+
+
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -1502,12 +1660,40 @@ export default function DungeonCrawler() {
 
   const restartGame = () => {
     if (gameRef.current) {
-      // Use the existing player name or wallet address
-      const playerName = gameRef.current.player.name || 
-                        gameRef.current.player.walletAddress || 
+      // Save score to leaderboard before restarting
+      if (gameState === 'gameOver') {
+        leaderboardRef.current?.addEntry(
+          gameRef.current.player, 
+          gameRef.current.dungeon_level
+        );
+      }
+      
+      // Restart the game with the same player name/wallet
+      const playerName = gameRef.current.player.walletAddress || 
+                        gameRef.current.player.name || 
                         "Anonymous Player";
       gameRef.current.restart(playerName);
+      
+      // Update game state
       setGameState('playing');
+      setShowLeaderboard(false);
+      
+      // Restart the game loop
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          animationRef.current = requestAnimationFrame(() => {
+            if (gameRef.current) {
+              gameRef.current.update_camera();
+              gameRef.current.draw(ctx);
+            }
+          });
+        }
+      }
     }
   };
 
@@ -1572,25 +1758,60 @@ export default function DungeonCrawler() {
         className="border border-gray-800"
       />
       
+      {/* Add leaderboard button */}
+      {gameState === 'playing' && (
+        <button
+          onClick={() => setShowLeaderboard(true)}
+          className="absolute top-4 right-4 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded"
+        >
+          View Leaderboard
+        </button>
+      )}
+
+      {/* Show leaderboard when requested during gameplay */}
+      {showLeaderboard && gameState === 'playing' && leaderboardRef.current && (
+        <LeaderboardDisplay 
+          leaderboard={leaderboardRef.current} 
+          onClose={() => setShowLeaderboard(false)}
+        />
+      )}
+      
       {gameState === 'gameOver' && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 text-white">
-          <h1 className="text-4xl font-bold mb-6">Game Over</h1>
-          {playerAddress && <p className="mb-4">Player: {playerAddress}</p>}
-          <div className="flex gap-4">
-            <button
-              onClick={restartGame}
-              className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-bold text-lg transition-colors"
-            >
-              Restart
-            </button>
-            <button
-              onClick={quitGame}
-              className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-bold text-lg transition-colors"
-            >
-              Quit
-            </button>
+        <>
+          {/* Game over overlay */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 text-white">
+            <h1 className="text-4xl font-bold mb-6">Game Over</h1>
+            {playerAddress && <p className="mb-4">Player: {playerAddress}</p>}
+            <p className="text-2xl mb-6">
+              Final Score: <span className="text-yellow-400">{gameRef.current?.player.score || 0}</span>
+            </p>
+            <div className="flex gap-4">
+              <button
+                onClick={restartGame}
+                className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-bold text-lg transition-colors"
+              >
+                Restart
+              </button>
+              <button
+                onClick={quitGame}
+                className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-bold text-lg transition-colors"
+              >
+                Quit
+              </button>
+            </div>
           </div>
-        </div>
+          
+          {/* Show leaderboard automatically on game over */}
+          {leaderboardRef.current && (
+            <LeaderboardDisplay 
+              leaderboard={leaderboardRef.current} 
+              onClose={restartGame} // This will call restartGame when clicked
+              showScore={true}
+              playerScore={gameRef.current?.player.score || 0}
+              isGameOver={true}
+            />
+          )}
+        </>
       )}
     </div>
   );
