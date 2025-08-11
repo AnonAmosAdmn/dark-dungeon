@@ -327,6 +327,16 @@ class Game {
     this.generate_dungeon();
   }
 
+  restart() {
+    this.dungeon_level = 1;
+    this.player = new Player(0, 0);
+    this.generate_dungeon();
+    this.game_state = "playing";
+    this.message = "Game restarted!";
+    this.message_time = Date.now();
+    this.combat_log = [];
+  }
+
   generate_dungeon() {
     // Choose random colors for this level
     this.wall_color = WALL_PALETTE[Math.floor(Math.random() * WALL_PALETTE.length)];
@@ -1216,7 +1226,7 @@ class Game {
     
     ctx.fillStyle = WHITE;
     ctx.font = "24px Arial";
-    const restart_text = "Refresh the page to restart";
+    const restart_text = "Press R to restart or use the buttons below";
     ctx.fillText(restart_text, SCREEN_WIDTH / 2 - ctx.measureText(restart_text).width / 2, SCREEN_HEIGHT / 2 + 20);
   }
 
@@ -1270,9 +1280,9 @@ class Game {
 export default function DungeonCrawler() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gameStarted, setGameStarted] = useState(false);
+  const [showGameOver, setShowGameOver] = useState(false);
   const gameRef = useRef<Game | null>(null);
   const animationRef = useRef<number | null>(null);
-  const lastUpdateRef = useRef<number>(0);
   const keysRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
@@ -1290,7 +1300,17 @@ export default function DungeonCrawler() {
 
     // Handle keyboard input
     const handleKeyDown = (e: KeyboardEvent) => {
-      keysRef.current.add(e.key.toLowerCase());
+      const key = e.key.toLowerCase();
+      keysRef.current.add(key);
+      
+      // Handle restart with R key (works anytime)
+      if (key === 'r') {
+        restartGame();
+      }
+      // Handle quit with Q key (works anytime)
+      else if (key === 'q') {
+        quitGame();
+      }
     };
 
     const handleKeyUp = (e: KeyboardEvent) => {
@@ -1305,45 +1325,53 @@ export default function DungeonCrawler() {
       const game = gameRef.current;
       if (!game) return;
 
-      // Handle movement
-      const keys = keysRef.current;
-      let dx = 0;
-      let dy = 0;
+      // Only process movement if game is playing
+      if (game.game_state === "playing") {
+        // Handle movement
+        const keys = keysRef.current;
+        let dx = 0;
+        let dy = 0;
 
-      if (keys.has('w') || keys.has('arrowup')) dy = -1;
-      if (keys.has('s') || keys.has('arrowdown')) dy = 1;
-      if (keys.has('a') || keys.has('arrowleft')) dx = -1;
-      if (keys.has('d') || keys.has('arrowright')) dx = 1;
+        if (keys.has('w') || keys.has('arrowup')) dy = -1;
+        if (keys.has('s') || keys.has('arrowdown')) dy = 1;
+        if (keys.has('a') || keys.has('arrowleft')) dx = -1;
+        if (keys.has('d') || keys.has('arrowright')) dx = 1;
 
-      if (dx !== 0 || dy !== 0) {
-        game.move_player(dx, dy);
-        // Clear the movement keys after processing - CORRECTED VERSION
-        if (dy === -1) {
-          keys.delete('w');
-          keys.delete('arrowup');
+        if (dx !== 0 || dy !== 0) {
+          game.move_player(dx, dy);
+          // Clear the movement keys after processing
+          if (dy === -1) {
+            keys.delete('w');
+            keys.delete('arrowup');
+          }
+          if (dy === 1) {
+            keys.delete('s');
+            keys.delete('arrowdown');
+          }
+          if (dx === -1) {
+            keys.delete('a');
+            keys.delete('arrowleft');
+          }
+          if (dx === 1) {
+            keys.delete('d');
+            keys.delete('arrowright');
+          }
         }
-        if (dy === 1) {
-          keys.delete('s');
-          keys.delete('arrowdown');
-        }
-        if (dx === -1) {
-          keys.delete('a');
-          keys.delete('arrowleft');
-        }
-        if (dx === 1) {
-          keys.delete('d');
-          keys.delete('arrowright');
-        }
-      }
 
-      // Handle poison
-      if (game.player.poisoned) {
-        game.handle_poison();
+        // Handle poison
+        if (game.player.poisoned) {
+          game.handle_poison();
+        }
       }
 
       // Update camera and draw
       game.update_camera();
       game.draw(ctx);
+
+      // Check if game is over and update state
+      if (game.game_state === "game_over" && !showGameOver) {
+        setShowGameOver(true);
+      }
 
       animationRef.current = requestAnimationFrame(gameLoop);
     };
@@ -1357,10 +1385,27 @@ export default function DungeonCrawler() {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [gameStarted]);
+  }, [gameStarted, showGameOver]);
 
   const startGame = () => {
     setGameStarted(true);
+    setShowGameOver(false);
+  };
+
+  const restartGame = () => {
+    if (gameRef.current) {
+      gameRef.current.restart();
+      setShowGameOver(false);
+    }
+  };
+
+  const quitGame = () => {
+    setGameStarted(false);
+    setShowGameOver(false);
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
+    gameRef.current = null;
   };
 
   if (!gameStarted) {
@@ -1382,6 +1427,8 @@ export default function DungeonCrawler() {
             <li>WASD or Arrow Keys - Move</li>
             <li>Walk into enemies to attack</li>
             <li>Walk into items to pick them up</li>
+            <li>R - Restart game (anytime)</li>
+            <li>Q - Quit to menu (anytime)</li>
           </ul>
         </div>
       </div>
@@ -1389,13 +1436,33 @@ export default function DungeonCrawler() {
   }
 
   return (
-    <div className="flex justify-center items-center h-screen bg-black">
+    <div className="flex justify-center items-center h-screen bg-black relative">
       <canvas
         ref={canvasRef}
         width={SCREEN_WIDTH}
         height={SCREEN_HEIGHT}
         className="border border-gray-800"
       />
+      
+      {showGameOver && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 text-white">
+          <h1 className="text-4xl font-bold mb-6">Game Over</h1>
+          <div className="flex gap-4">
+            <button
+              onClick={restartGame}
+              className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-bold text-lg transition-colors"
+            >
+              Restart
+            </button>
+            <button
+              onClick={quitGame}
+              className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-bold text-lg transition-colors"
+            >
+              Quit
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
